@@ -12,8 +12,8 @@
     <path id="PrimeCluster.classpath">
         <pathelement location="bin"/>
         <pathelement location="../../../../apps/jdk1.8.0_05/jre/lib/ext/jfxrt.jar"/>
-        <pathelement location="libs/jade-4.2.jar"/>
-        <pathelement location="libs/json.jar"/>
+        <pathelement location="lib/jade-4.2.jar"/>
+        <pathelement location="lib/json.jar"/>
     </path>
     <target name="init">
         <mkdir dir="bin"/>
