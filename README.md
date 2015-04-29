@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 PrimeCluster
 ============
 
@@ -19,3 +20,7 @@ and run with
 	ant run 
 
 
+=======
+# PrimeCluster
+Distributed Prime Number Generator using JADE
+>>>>>>> 067c70c60c69ce321337b4c7cc580d6de8b06ca9
