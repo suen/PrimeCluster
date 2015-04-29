@@ -45,7 +45,7 @@ public class ManagerBehaviour1 extends Behaviour {
 		
 		if (message.getPerformative() == Pmessage.CREATE_COMPUTE_AGENT){
 			AID sender = message.getSender();
-			String contentStr = (String)message.getContent();
+			String contentStr = message.getContent().toString();
 			JSONObject contentjson = new JSONObject(contentStr);
 			
 			String unique_id = contentjson.get("id").toString();
