@@ -33,7 +33,7 @@ public class MasterAgent extends Agent {
 		
 		addBehaviour(new HandleComputeAgentBehaviour(this, 500));
 		
-		
+	/*	
 	    try {
 		    AgentContainer container = this.getContainerController();
 	    	AgentController a = container.createNewAgent("manager",
@@ -44,6 +44,7 @@ public class MasterAgent extends Agent {
 	    } catch (Exception e){
 	    	e.printStackTrace();
 	    }
+	    */
 	}
 	
 	private void registerWithDFService(){
