@@ -5,16 +5,15 @@
               directory with the processing instruction <?eclipse.ant.import?>
               as the first entry and export the buildfile again. --><project basedir="." default="build" name="PrimeCluster">
     <property environment="env"/>
+    <property name="ECLIPSE_HOME" value="../../../../apps/eclipse-jee-luna/"/>
     <property name="debuglevel" value="source,lines,vars"/>
-    <property name="target" value="1.8"/>
-    <property name="source" value="1.8"/>
+    <property name="target" value="1.7"/>
+    <property name="source" value="1.7"/>
     <path id="PrimeCluster.classpath">
         <pathelement location="bin"/>
         <pathelement location="../../../../apps/jdk1.8.0_05/jre/lib/ext/jfxrt.jar"/>
-        <pathelement location="../../../../apps/jars/jade/j2ee.jar"/>
-        <pathelement location="../../../../apps/jars/jade/jade-4.2.jar"/>
-        <pathelement location="../../../../apps/jars/jade/javaee.jar"/>
-        <pathelement location="../../../../apps/jars/json.jar"/>
+        <pathelement location="libs/jade-4.2.jar"/>
+        <pathelement location="libs/json.jar"/>
     </path>
     <target name="init">
         <mkdir dir="bin"/>
@@ -39,15 +38,28 @@
         </javac>
     </target>
     <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects"/>
+    <target description="copy Eclipse compiler jars to ant lib directory" name="init-eclipse-compiler">
+        <copy todir="${ant.library.dir}">
+            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
+        </copy>
+        <unzip dest="${ant.library.dir}">
+            <patternset includes="jdtCompilerAdapter.jar"/>
+            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
+        </unzip>
+    </target>
+    <target description="compile project with Eclipse compiler" name="build-eclipse-compiler">
+        <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
+        <antcall target="build"/>
+    </target>
     <target name="run_master">
         <java classname="jade.Boot" failonerror="true" fork="yes">
-            <arg line="-host localhost -agents masteragent:com.daubajee.prime.MasterAgent"/>
+            <arg line="-host 192.168.1.90 -agents masteragent:com.daubajee.prime.MasterAgent"/>
             <classpath refid="PrimeCluster.classpath"/>
         </java>
     </target>
     <target name="run_slave">
         <java classname="jade.Boot" failonerror="true" fork="yes">
-            <arg line="-host localhost -container"/>
+            <arg line="-host 192.168.1.90 -container"/>
             <classpath refid="PrimeCluster.classpath"/>
         </java>
     </target>
