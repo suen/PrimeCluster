@@ -66,7 +66,7 @@ public class HandleComputeAgentBehaviour extends TickerBehaviour {
 	
 	private void testSum(){
 	
-		if (masterAgent.computeAgents.size()<19)
+		if (masterAgent.computeAgents.size()<11)
 			return;
 
 		int start = 0;
