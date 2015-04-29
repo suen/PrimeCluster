@@ -66,14 +66,14 @@ public class HandleComputeAgentBehaviour extends TickerBehaviour {
 	
 	private void testSum(){
 	
-		if (masterAgent.computeAgents.size()<11)
+		if (masterAgent.computeAgents.size()<19)
 			return;
 
 		int start = 0;
 		int end = 0;
 		Random rand = new Random();
 		
-		for(int i=0; i<11; i++){
+		for(int i=0; i<masterAgent.computeAgents.size(); i++){
 			
 			end = start + rand.nextInt(100);
 
