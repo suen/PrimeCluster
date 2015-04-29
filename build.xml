@@ -59,7 +59,7 @@
     </target>
     <target name="run_slave">
         <java classname="jade.Boot" failonerror="true" fork="yes">
-            <arg line="-host 192.168.1.90 -container"/>
+            <arg line="-host 192.168.1.90 -port 1099 -local-host 192.168.1.24 -local-port 1099 -container computeManager:com.daubajee.prime.ComputeAgentManager"/>
             <classpath refid="PrimeCluster.classpath"/>
         </java>
     </target>
