@@ -1,37 +1,51 @@
 package com.daubajee.prime;
 
+import org.json.JSONObject;
+
+import com.daubajee.prime.behaviours.ComputeAgentBehaviour;
+
 import jade.core.AID;
 import jade.core.Agent;
 import jade.domain.DFService;
 import jade.domain.FIPAException;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
+import jade.lang.acl.ACLMessage;
 
 public class ComputeAgent extends Agent {
 
+	public AID masterAgentAID = null;
+	
+	
 	@Override
 	protected void setup() {
 		super.setup();
+		registerWithMaster();
+		
+		addBehaviour(new ComputeAgentBehaviour(this, 100));
 
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		
-		//search for master agent
-		AID masterAgent = searchMasterAgent();
-		
-		if (masterAgent==null){
-			System.out.println("Master Agent not found");
-			return;
-		}
-
-		System.out.println("[ComputeAgent] Master Agent = " + masterAgent.getName());
-		
 	}
 	
+	private void test(){
+		masterAgentAID = searchMasterAgent();
+		
+		if (masterAgentAID==null){
+			System.out.println("[ComputeAgent] Master Agent not found");
+			return;
+		}
+		System.out.println("[ComputeAgent] Master Agent = " + masterAgentAID.getName());
+	}
+	
+	private void registerWithMaster() {
+		AID master = searchMasterAgent();
+		ACLMessage message = new ACLMessage(Pmessage.REGISTER_COMPUTE_AGENT);
+		message.addReceiver(master );
+		message.setConversationId("by-ComputeAgent");
+		send(message);
+	}
+		
 	private AID searchMasterAgent() {
+
 		DFAgentDescription template = new DFAgentDescription();
 		ServiceDescription sd = new ServiceDescription();
 		sd.setType("master-agent");
@@ -49,6 +63,22 @@ public class ComputeAgent extends Agent {
 			return null;
 		}
 		return result[0].getName();
+	}
+	
+	public void sendResultToMaster(int result){
+		AID master = searchMasterAgent();
+		ACLMessage message = new ACLMessage(Pmessage.RESULT);
+		
+		JSONObject resultjson = new JSONObject();
+		resultjson.put("result", String.valueOf(result));
+		
+		message.setContent(resultjson.toString());
+		
+		message.addReceiver(master);
+		message.setConversationId("by-ComputeAgent");
+		send(message);
+		
+		System.out.println("[COMPUTE] Result sent to master: " + result);
 	}
 	
 }
