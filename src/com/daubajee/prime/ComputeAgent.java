@@ -1,5 +1,7 @@
 package com.daubajee.prime;
 
+import java.math.BigInteger;
+
 import org.json.JSONObject;
 
 import com.daubajee.prime.behaviours.ComputeAgentBehaviour;
@@ -71,6 +73,22 @@ public class ComputeAgent extends Agent {
 		
 		JSONObject resultjson = new JSONObject();
 		resultjson.put("result", String.valueOf(result));
+		
+		message.setContent(resultjson.toString());
+		
+		message.addReceiver(master);
+		message.setConversationId("by-ComputeAgent");
+		send(message);
+		
+		System.out.println("[COMPUTE] Result sent to master: " + result);
+	}
+	
+	public void sendResultToMaster(BigInteger result){
+		AID master = searchMasterAgent();
+		ACLMessage message = new ACLMessage(Pmessage.RESULT_PRIME);
+		
+		JSONObject resultjson = new JSONObject();
+		resultjson.put("result", result.toString());
 		
 		message.setContent(resultjson.toString());
 		

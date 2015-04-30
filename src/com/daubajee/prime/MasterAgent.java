@@ -63,4 +63,8 @@ public class MasterAgent extends Agent {
 		}
 	}
 	
+	public void println(AID aid, String message){
+		
+	}
+	
 }

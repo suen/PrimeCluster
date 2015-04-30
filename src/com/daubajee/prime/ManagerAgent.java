@@ -10,7 +10,7 @@ import jade.lang.acl.ACLMessage;
 
 import com.daubajee.prime.behaviours.ManagerBehaviour1;
 
-public class ComputeAgentManager extends Agent {
+public class ManagerAgent extends Agent {
 	
 	@Override
 	protected void setup() {
